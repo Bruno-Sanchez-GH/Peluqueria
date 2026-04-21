@@ -52,6 +52,11 @@ if (slides.length && dots.length) {
     setActiveSlide(nextIndex);
   };
 
+  const previousSlide = () => {
+    const previousIndex = (currentIndex - 1 + slides.length) % slides.length;
+    setActiveSlide(previousIndex);
+  };
+
   const restartAutoPlay = () => {
     window.clearInterval(autoPlay);
     autoPlay = window.setInterval(nextSlide, 5000);
@@ -67,10 +72,51 @@ if (slides.length && dots.length) {
   const hero = document.querySelector(".hero-slider");
 
   if (hero) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+
     hero.addEventListener("mouseenter", () => window.clearInterval(autoPlay));
     hero.addEventListener("mouseleave", restartAutoPlay);
-    hero.addEventListener("touchstart", () => window.clearInterval(autoPlay), { passive: true });
-    hero.addEventListener("touchend", restartAutoPlay, { passive: true });
+    hero.addEventListener(
+      "touchstart",
+      (event) => {
+        const touch = event.changedTouches[0];
+
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        touchEndX = touchStartX;
+        window.clearInterval(autoPlay);
+      },
+      { passive: true }
+    );
+    hero.addEventListener(
+      "touchmove",
+      (event) => {
+        touchEndX = event.changedTouches[0].clientX;
+      },
+      { passive: true }
+    );
+    hero.addEventListener(
+      "touchend",
+      (event) => {
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        const isHorizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4;
+
+        if (isHorizontalSwipe) {
+          if (deltaX < 0) {
+            nextSlide();
+          } else {
+            previousSlide();
+          }
+        }
+
+        restartAutoPlay();
+      },
+      { passive: true }
+    );
   }
 
   currentIndex = 0;

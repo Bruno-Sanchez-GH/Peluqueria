@@ -233,7 +233,7 @@ textarea {
   inset: 0;
   display: flex;
   align-items: flex-start;
-  padding: 184px 20px 140px;
+  padding: 24px 20px 140px;
   opacity: 1;
   transform: translateX(100%);
   transition: transform 1.05s cubic-bezier(0.77, 0, 0.18, 1);
