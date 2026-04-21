@@ -345,7 +345,7 @@ textarea {
 }
 
 .hero-caption {
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 26px;
@@ -426,7 +426,6 @@ textarea {
   background: linear-gradient(135deg, var(--accent-warm), #a9c4ff);
 }
 
-.hero-card,
 .info-card,
 .service-card,
 .price-card,
@@ -443,34 +442,15 @@ textarea {
   box-shadow: var(--shadow);
 }
 
-.hero-card {
-  padding: 18px 20px;
-  max-width: 320px;
-  border-color: rgba(110, 159, 255, 0.18);
-}
-
 .hero-overlay-shell {
   position: absolute;
   left: 50%;
   bottom: 24px;
   z-index: 4;
-  display: grid;
-  gap: 14px;
+  display: flex;
+  justify-content: center;
   width: min(calc(100% - 40px), var(--max-width));
   transform: translateX(-50%);
-}
-
-.hero-card p,
-.hero-card span {
-  display: block;
-  margin: 0;
-  color: var(--muted);
-}
-
-.hero-card strong {
-  display: block;
-  margin: 8px 0;
-  font-size: 1.35rem;
 }
 
 .trust-strip,
@@ -1028,13 +1008,11 @@ textarea {
   }
 
   .hero-caption {
-    display: flex;
     grid-column: 1;
   }
 
   .hero-overlay-shell {
-    grid-template-columns: 1fr auto;
-    align-items: end;
+    justify-content: flex-start;
   }
 
   .hero-slider__controls {
